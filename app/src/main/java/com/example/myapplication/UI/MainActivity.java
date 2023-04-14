@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.myapplication.Database.Repository;
 import com.example.myapplication.R;
+import com.example.myapplication.entities.Courses;
+import com.example.myapplication.entities.Term;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         TextView text2=findViewById(R.id.textView4);
         text2.setOnClickListener(new View.OnClickListener() {
@@ -41,5 +47,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case R.id.addSampleData:
+                Term term=new Term(0,"Term 1");
+                Repository repository=new Repository(getApplication());
+                repository.insert(term);
+                Courses courses=new Courses(0,"Course 1",1);
+                repository.insert(courses);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
