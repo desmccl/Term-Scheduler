@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Notify Start"
+        android:orderInCategory="100"
+        android:id="@+id/notifystart"/>
+    <item android:orderInCategory="100"
+        android:title="Notify End"
+        android:id="@+id/notifyend"/>
+    <item android:orderInCategory="100"
+        android:title="Delete Assessment"
+        android:id="@+id/deleteassessment"/>
+</menu>

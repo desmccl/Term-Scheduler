@@ -4,9 +4,12 @@ import android.app.Application;
 
 import com.example.myapplication.dao.AssessmentDAO;
 import com.example.myapplication.dao.CourseDAO;
+
+import com.example.myapplication.dao.NotesDAO;
 import com.example.myapplication.dao.TermDAO;
 import com.example.myapplication.entities.Assessments;
 import com.example.myapplication.entities.Courses;
+import com.example.myapplication.entities.Notes;
 import com.example.myapplication.entities.Term;
 
 import java.util.List;
@@ -17,10 +20,14 @@ public class Repository {
     private CourseDAO mCourseDAO;
     private TermDAO mTermDAO;
     private AssessmentDAO mAssessmentDAO;
+    private NotesDAO mNotesDAO;
+
 
     private List<Term> mAllTerms;
     private List<Courses> mAllCourses;
     private List<Assessments> mAllAssessments;
+    private List<Notes> mAllNotes;
+
 
     private static int NUMBER_OF_THREADS=4;
     static final ExecutorService databaseExecutor= Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -30,6 +37,7 @@ public class Repository {
         mTermDAO= db.termDAO();
         mCourseDAO= db.courseDAO();
         mAssessmentDAO= db.assessmentDAO();
+        mNotesDAO= db.notesDAO();
     }
     public List<Term> getAllTerms(){
         databaseExecutor.execute(()->{
@@ -154,4 +162,47 @@ public class Repository {
             throw new RuntimeException(e);
         }
     }
+
+    public List<Notes> getAllNotes(){
+        databaseExecutor.execute(()->{
+            mAllNotes=mNotesDAO.getAllNotes();
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return mAllNotes;
+    }
+    public void insert(Notes notes){
+        databaseExecutor.execute(()->{
+            mNotesDAO.insert(notes);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void update(Notes notes){
+        databaseExecutor.execute(()->{
+            mNotesDAO.update(notes);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void delete(Notes notes){
+        databaseExecutor.execute(()->{
+            mNotesDAO.delete(notes);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

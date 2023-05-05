@@ -8,16 +8,19 @@ import androidx.room.RoomDatabase;
 
 import com.example.myapplication.dao.AssessmentDAO;
 import com.example.myapplication.dao.CourseDAO;
+import com.example.myapplication.dao.NotesDAO;
 import com.example.myapplication.dao.TermDAO;
 import com.example.myapplication.entities.Assessments;
 import com.example.myapplication.entities.Courses;
+import com.example.myapplication.entities.Notes;
 import com.example.myapplication.entities.Term;
 
-@Database(entities = {Term.class, Courses.class, Assessments.class}, version=1, exportSchema = false)
+@Database(entities = {Term.class, Courses.class, Assessments.class, Notes.class}, version=8, exportSchema = false)
 public abstract class SchedulerDatabaseBuilder extends RoomDatabase {
     public abstract TermDAO termDAO();
     public abstract CourseDAO courseDAO();
     public abstract AssessmentDAO assessmentDAO();
+    public abstract NotesDAO notesDAO();
 
     private static volatile SchedulerDatabaseBuilder INSTANCE;
 

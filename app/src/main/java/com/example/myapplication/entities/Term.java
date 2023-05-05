@@ -32,4 +32,12 @@ public class Term {
         this.termID = termID;
         this.termName = termName;
     }
+
+    @Override
+    public String toString() {
+        return "Term{" +
+                "termID=" + termID +
+                ", termName='" + termName + '\'' +
+                '}';
+    }
 }

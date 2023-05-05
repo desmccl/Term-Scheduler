@@ -11,10 +11,13 @@ import android.widget.TextView;
 
 import com.example.myapplication.Database.Repository;
 import com.example.myapplication.R;
+import com.example.myapplication.entities.Assessments;
 import com.example.myapplication.entities.Courses;
+import com.example.myapplication.entities.Notes;
 import com.example.myapplication.entities.Term;
 
 public class MainActivity extends AppCompatActivity {
+    public static int numAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +33,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        TextView text2=findViewById(R.id.textView4);
-        text2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this, CourseList.class);
-                startActivity(intent);
-            }
-        });
 
-        TextView text3=findViewById(R.id.textView5);
-        text3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this, AssessmentList.class);
-                startActivity(intent);
-            }
-        });
+
+
     }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -55,11 +44,18 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case R.id.addSampleData:
-                Term term=new Term(0,"Term 1");
+                Term term1=new Term(0,"Term 1");
                 Repository repository=new Repository(getApplication());
-                repository.insert(term);
-                Courses courses=new Courses(0,"Course 1",1);
+                repository.insert(term1);
+
+                Courses courses=new Courses(0,"Course 1",1,"In Progress", 0,"Sally", "555-444-9874","sally@email.com");
                 repository.insert(courses);
+
+                Notes notes=new Notes(0,1, "note");
+                repository.insert(notes);
+
+                Assessments assessments =new Assessments(0,"Assessment 1",1);
+                repository.insert(assessments);
                 return true;
         }
         return super.onOptionsItemSelected(item);
