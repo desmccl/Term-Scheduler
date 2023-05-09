@@ -70,11 +70,8 @@ public class TermDetails extends AppCompatActivity {
         final CourseAdapter courseAdapter = new CourseAdapter(this);
         recyclerView.setAdapter(courseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<Courses> filteredCourses = new ArrayList<>();
-        for (Courses c : repository.getAllCourses()) {
-            if (c.getTermID() == id) filteredCourses.add(c);
-        }
-        courseAdapter.setCourses(filteredCourses);
+
+
         Button button=findViewById(R.id.savebutton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +146,7 @@ public class TermDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(TermDetails.this, CourseDetails.class);
+                intent.putExtra("termID", id);
                 startActivity(intent);
             }
         });
@@ -158,12 +156,16 @@ public class TermDetails extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        List<Courses> allCourses = repository.getAllCourses();
         RecyclerView recyclerView = findViewById(R.id.courserecyclerview);
         final CourseAdapter courseAdapter = new CourseAdapter(this);
         recyclerView.setAdapter(courseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        courseAdapter.setCourses(allCourses);
+
+        List<Courses> filteredCourses = new ArrayList<>();
+        for (Courses c : repository.getAllCourses()) {
+            if (c.getTermID() == id) filteredCourses.add(c);
+        }
+        courseAdapter.setCourses(filteredCourses);
     }
     private void updateLabelEnd() {
         myFormat = "MM/dd/yy";
@@ -227,7 +229,7 @@ public class TermDetails extends AppCompatActivity {
 
                 numCourses = 0;
                 for (Courses courses : repository.getAllCourses()) {
-                    if (courses.getTermID() == id) ++numCourses;
+                    if (courses.getTermID() == id) numCourses++;
                 }
 
                 if (numCourses == 0) {

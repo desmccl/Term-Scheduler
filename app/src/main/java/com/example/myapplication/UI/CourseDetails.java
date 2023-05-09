@@ -45,6 +45,7 @@ public class CourseDetails extends AppCompatActivity {
     EditText courseInstructor;
     EditText courseStatus;
     EditText editName;
+
     DatePickerDialog.OnDateSetListener startDate;
     DatePickerDialog.OnDateSetListener endDate;
     final Calendar myCalendarStart = Calendar.getInstance();
@@ -54,7 +55,7 @@ public class CourseDetails extends AppCompatActivity {
     String name;
     String note;
     int id;
-    int termId;
+    int termID;
     int mentorID;
 
     String mentorName;
@@ -83,7 +84,7 @@ public class CourseDetails extends AppCompatActivity {
         id = getIntent().getIntExtra("id", -1);
         name = getIntent().getStringExtra("name");
         note = getIntent().getStringExtra("note");
-        termId = getIntent().getIntExtra("termID", -1);
+        termID = getIntent().getIntExtra("termID",-1);
         status = getIntent().getStringExtra("status");
         mentorName = getIntent().getStringExtra("mentor");
         mentorPhone = getIntent().getStringExtra("phone");
@@ -93,6 +94,8 @@ public class CourseDetails extends AppCompatActivity {
         courseInstructor.setText(mentorName);
         editPhone.setText(mentorPhone);
         editEmail.setText(mentorEmail);
+
+
         repository = new Repository(getApplication());
 
         RecyclerView recyclerView = findViewById(R.id.assessmentrecyclerview);
@@ -128,12 +131,12 @@ public class CourseDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(id == -1) {
-                    courses = new Courses(0, editName.getText().toString(),termId, courseStatus.getText().toString(),0,courseInstructor.getText().toString(),
+                    courses = new Courses(0, editName.getText().toString(),termID, courseStatus.getText().toString(),0,courseInstructor.getText().toString(),
                             editPhone.getText().toString(), editEmail.getText().toString());
                     repository.insert(courses);
                 }
                 else {
-                    courses = new Courses(id, editName.getText().toString(), termId, courseStatus.getText().toString(),mentorID,courseInstructor.getText().toString(),
+                    courses = new Courses(id, editName.getText().toString(), termID, courseStatus.getText().toString(),mentorID,courseInstructor.getText().toString(),
                             editPhone.getText().toString(), editEmail.getText().toString());
                     repository.update(courses);
                 }
@@ -146,6 +149,7 @@ public class CourseDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(CourseDetails.this, NotesDetails.class);
+                intent.putExtra("courseID", id);
                 startActivity(intent);
             }
         });
@@ -207,6 +211,7 @@ public class CourseDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(CourseDetails.this, AssessmentDetails.class);
+                intent.putExtra("courseID", id);
                 startActivity(intent);
             }
         });
@@ -218,19 +223,32 @@ public class CourseDetails extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        List<Assessments> allAssessments = repository.getAllAssessments();
+
         RecyclerView recyclerView = findViewById(R.id.assessmentrecyclerview);
         final AssessmentAdapter assessmentAdapter = new AssessmentAdapter(this);
         recyclerView.setAdapter(assessmentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        assessmentAdapter.setAssessments(allAssessments);
 
-        List<Notes> allNotes = repository.getAllNotes();
+        List<Assessments> filteredAssessments = new ArrayList<>();
+        for (Assessments a : repository.getAllAssessments()) {
+            if (a.getCourseID() == id) filteredAssessments.add(a);
+        }
+
+        assessmentAdapter.setAssessments(filteredAssessments);
+
         RecyclerView recyclerView1 = findViewById(R.id.notesrecyclerview);
         final NotesAdapter notesAdapter = new NotesAdapter(this);
         recyclerView1.setAdapter(notesAdapter);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-        notesAdapter.setNotes(allNotes);
+
+        List<Notes> filteredNotes = new ArrayList<>();
+        for (Notes n : repository.getAllNotes()) {
+            if (n.getCourseID() == id) filteredNotes.add(n);
+        }
+
+        notesAdapter.setNotes(filteredNotes);
+
+
 
     }
 

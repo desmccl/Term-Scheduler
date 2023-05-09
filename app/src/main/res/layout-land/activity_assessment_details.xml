@@ -29,20 +29,6 @@
             android:hint="Assessment Name"/>
 
         <TextView
-            android:id="@+id/assessmenttype"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Assessment Type" />
-
-        <EditText
-            android:id="@+id/editTextassessmenttype"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Objective or Performance"
-            android:inputType="textPersonName" />
-
-        <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

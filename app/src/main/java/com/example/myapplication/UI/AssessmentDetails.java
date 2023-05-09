@@ -31,6 +31,7 @@ public class AssessmentDetails extends AppCompatActivity {
     EditText editDate;
     EditText editEndDate;
     EditText editName;
+    EditText editType;
     DatePickerDialog.OnDateSetListener startDate;
     DatePickerDialog.OnDateSetListener endDate;
     final Calendar myCalendarStart = Calendar.getInstance();
@@ -38,6 +39,7 @@ public class AssessmentDetails extends AppCompatActivity {
     String myFormat;
     SimpleDateFormat sdf;
     String name;
+    String type;
     int id;
     int courseID;
     Assessments assessments;
@@ -52,14 +54,17 @@ public class AssessmentDetails extends AppCompatActivity {
         editDate=findViewById(R.id.editdatestart2);
         editEndDate=findViewById(R.id.editdateend2);
         editName=findViewById(R.id.editAssessmentName);
+        editType=findViewById(R.id.editTextassessmenttype);
         String myFormat = "MM/dd/yy";
         sdf = new SimpleDateFormat(myFormat, Locale.US);
         editDate.setText(sdf.format(new Date()));
         editEndDate.setText(sdf.format(new Date()));
         id = getIntent().getIntExtra("id", -1);
         name = getIntent().getStringExtra("name");
+        type = getIntent().getStringExtra("type");
         courseID = getIntent().getIntExtra("courseID", -1);
         editName.setText(name);
+        editType.setText(type);
         repository = new Repository(getApplication());
 
         Button button=findViewById(R.id.savebutton3);
@@ -67,11 +72,11 @@ public class AssessmentDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(id == -1) {
-                    assessments = new Assessments(0, editName.getText().toString(),courseID);
+                    assessments = new Assessments(0, editName.getText().toString(),courseID, editType.getText().toString());
                     repository.insert(assessments);
                 }
                 else {
-                    assessments = new Assessments(id, editName.getText().toString(), courseID);
+                    assessments = new Assessments(id, editName.getText().toString(), courseID, editType.getText().toString());
                     repository.update(assessments);
                 }
             }

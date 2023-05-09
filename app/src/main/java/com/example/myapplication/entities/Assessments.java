@@ -10,6 +10,16 @@ public class Assessments {
     private String assessmentName;
     private int courseID;
 
+    public String getAssessmentType() {
+        return assessmentType;
+    }
+
+    public void setAssessmentType(String assessmentType) {
+        this.assessmentType = assessmentType;
+    }
+
+    private String assessmentType;
+
     public void setAssessmentID(int assessmentID) {
         this.assessmentID = assessmentID;
     }
@@ -37,9 +47,10 @@ public class Assessments {
     public Assessments() {
     }
 
-    public Assessments(int assessmentID, String assessmentName, int courseID) {
+    public Assessments(int assessmentID, String assessmentName, int courseID, String assessmentType) {
         this.assessmentID = assessmentID;
         this.assessmentName = assessmentName;
         this.courseID = courseID;
+        this.assessmentType = assessmentType;
     }
 }

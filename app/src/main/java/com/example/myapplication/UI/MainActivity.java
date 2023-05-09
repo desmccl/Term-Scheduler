@@ -37,27 +37,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public boolean onCreateOptionsMenu(Menu menu){
+    /*public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case R.id.addSampleData:
-                Term term1=new Term(0,"Term 1");
+                Term term=new Term(0,"Term 1");
                 Repository repository=new Repository(getApplication());
-                repository.insert(term1);
+                repository.insert(term);
 
-                Courses courses=new Courses(0,"Course 1",1,"In Progress", 0,"Sally", "555-444-9874","sally@email.com");
-                repository.insert(courses);
-
-                Notes notes=new Notes(0,1, "note");
-                repository.insert(notes);
-
-                Assessments assessments =new Assessments(0,"Assessment 1",1);
-                repository.insert(assessments);
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }
